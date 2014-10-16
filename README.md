@@ -3,9 +3,9 @@ DMSt
 
 Calculates the neutrino flux from Dark Matter annihilation in compact stars.
 
-[DMStNeutrinos.py](DMStNeutrinos.py): main Python script
+- [DMStNeutrinos.py](DMStNeutrinos.py): main Python script
 
-inside the lib/ folder:
+and inside the lib/ folder:
 
 - [classes.py](lib/classes.py)
 
