@@ -7,14 +7,14 @@ Calculates the neutrino flux from Dark Matter annihilation in compact stars.
 
 inside the lib/ folder:
 
-[classes.py](lib/classes.py)
+- [classes.py](lib/classes.py)
 
-[constants.py](lib/constants.py)
+- [constants.py](lib/constants.py)
 
-[DMcapture.py](lib/DMcapture.py)
+- [DMcapture.py](lib/DMcapture.py)
 
-[functions.py](lib/functions.py)
+- [functions.py](lib/functions.py)
 
-[NxFunctions.py](lib/NxFunctions.py)
+- [NxFunctions.py](lib/NxFunctions.py)
 
-[unitconv.py](lib/unitconv.py)
+- [unitconv.py](lib/unitconv.py)
