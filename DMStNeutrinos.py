@@ -18,7 +18,7 @@ def calcALL(sigx, anncs):
     dm.prints()
 
     # Input star:
-    st = cl_star()
+    st = cl_star('WD')  # 'NS' or 'WD' for Neutron Star or White Dwarf
     st.prints()
 
     print " ********************************** "
@@ -28,7 +28,6 @@ def calcALL(sigx, anncs):
 	  print " ********************************** "
 	  print "          mx = %.2e " % dm.mx_v[i]
 	  print " ********************************** "
-	  mr = st.mn*dm.mxkg_v[i]/(st.mn+dm.mxkg_v[i])	# reduced mass, kg
 
           # Initializes lists that evolve with time:
           t = cl_timevars()
@@ -55,7 +54,7 @@ def calcALL(sigx, anncs):
 #          F_checkNxanalytical(i, t, dm, rxth, Nx_C_A)
 
 	  # Check if self-collapse is produced, if geometrical limit in selfcapture is reached, if degenerate core and Bose-Einstein condensate are formed:
-          kscoll, kgeoxx, kbec  = F_checkSelfColl_Deg_geoxx_Bec_eq(i, t, dm, t.Nx, Nsgvect, Nde, Nfe, Ngeoxxvect, Nbec)
+          kgeoxx, kbec  = F_checkSelfColl_Deg_geoxx_Bec_eq(i, t, dm, t.Nx, Nsgvect, Nde, Nfe, Ngeoxxvect, Nbec)
 
 	  # Time when self-collapse starts and time of BEC formation:
           tNsg, tNbec = F_calctimeSelfColl_Bec(t, dm, t.Nx, Nsg, Nbec, kbec)
@@ -81,17 +80,17 @@ def calcALL(sigx, anncs):
               Nx_C_sC_A_BEC = F_calcNx_C_sC_A_BEC(i, t, dm, Nx_C_sC_A, kgeoxx, kbec, annbec)
               t.Nx = Nx_C_sC_A_BEC
 
-	  # Calcs DM annihilation rate before collapse and checks if equilibrium capt=ann is reached:
+          # Recheck if self-collapse is produced with new Nx(t):
+          if not (not dm.SELFCAPT and not dm.BEC): F_checkSelfColl_Deg(i, t, dm, t.Nx, Nsgvect, Nde, Nfe)
+
+          # Calcs DM annihilation rate before collapse and checks if equilibrium capt=ann is reached:
           F_calcAnnrate_eq(i, t, dm)
 
-          # Recheck if self-collapse is produced with new Nx(t):
-          if not (not dm.SELFCAPT and not dm.BEC): kscoll = F_checkSelfColl_Deg(i, t, dm, t.Nx, Nsgvect, Nde, Nfe)
-
 	  # Computes the collapse of the DM cloud:
-          timecoll, rxcoll ,vxcoll, Nxcoll, annrate, tff, kend = F_computeCollapse(i, t, dm, t.Nx, kscoll)
+          timecoll, rxcoll ,vxcoll, Nxcoll, annrate, tff, kend = F_computeCollapse(i, t, dm, t.Nx)
 
           # Prints time evolution of parameters on screen:
-          F_printallevol(i, t, dm, Nsgvect, kscoll, kend, tff, timecoll, rxcoll, vxcoll, Nxcoll, annrate)
+          F_printallevol(i, t, dm, Nsgvect, kend, tff, timecoll, rxcoll, vxcoll, Nxcoll, annrate)
 
  	  # Computes emitted neutrino fluxes:   
           F_computeNeutFluxes(i, st, dm)
@@ -106,3 +105,4 @@ def main():
   
 if __name__ == "__main__":
     main()
+

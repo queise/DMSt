@@ -8,6 +8,7 @@ from lib.constants import *
 #    Main function
 #####################
 
+
 def F_capture(i, st, dm):
     print "-- Capture:"
     capt = F_captBert(dm.rhox, dm.mx_v[i], dm.vx, dm.sigx, st.Ms, st.Rs, st.An)      # 1/s
@@ -80,7 +81,7 @@ def F_captBert(rhox, mx, vx, sigx, Ms, Rs, An):
     sigDMp = sigx*Ms/mp*m.pow(An,3.) # cm2
     sigeff = min( sigDMp, siggeo)  # cm2
     if sigeff == siggeo:
-        print "   geolimit active in capture. Max sigx is:",siggeo/(Ms/mp*m.pow(An,3.))
+        print "   geometrical limit active in capture. The sigx that gives maximum capture is %.2e cm^2." % (siggeo/(Ms/mp*m.pow(An,3.)))
 #        print "n=",sigx*Ms/mp*m.pow(An,3.)," geo=",m.pi * m.pow(Rs*1.e+2,2)," sigeff=",sigeff, "sigxmax=",m.pi*m.pow(Rs*1.e+2,2)/(Ms/mp*m.pow(An,3.))
     return ( (8./(3.*m.pi))**0.5 ) *rhox*(vx*100.)/mx * ( 3.*(vesc**2.)/(2.*(vx**2.)) ) * sigeff
 
@@ -123,3 +124,4 @@ def F_captKouv(rhox, mx):
 def F_captSun(rhox, mx, vx, sigsi):
     CwptSI = 1.24e+20 * (rhox/0.3) * ((270./vx)**3) * 5.4*(sigsi/1.e-42) * ((100./mx)**2)
     return CwptSI
+
